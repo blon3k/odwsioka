@@ -79,7 +79,7 @@ export default function ProductShowcaseSection() {
           ))}
         </div>
 
-        <BrutalistButton href="/oferta" className="mt-16 sm:mt-20">
+        <BrutalistButton to="/oferta" className="mt-16 sm:mt-20">
           Zobacz całą ofertę
         </BrutalistButton>
       </div>

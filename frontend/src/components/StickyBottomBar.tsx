@@ -45,10 +45,6 @@ export default function StickyBottomBar({
     return () => resizeObserver.disconnect()
   }, [onHeightChange])
 
-  const scrollToOffer = () => {
-    document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-2 z-40 flex justify-center px-2">
       <div
@@ -63,7 +59,7 @@ export default function StickyBottomBar({
           <p className="font-heading text-xl font-bold uppercase tracking-tight text-black sm:text-2xl">
             Pakiet startowy
           </p>
-          <BrutalistButton size="sm" onClick={scrollToOffer}>
+          <BrutalistButton size="sm" to="/oferta">
             Zobacz ofertę
           </BrutalistButton>
         </div>

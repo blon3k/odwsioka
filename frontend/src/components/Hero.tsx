@@ -62,7 +62,7 @@ export default function Hero() {
             <StarRating />
           </div>
 
-          <BrutalistButton className="mt-10">
+          <BrutalistButton className="mt-10" to="/oferta">
             Zamów pakiet startowy
           </BrutalistButton>
         </div>
