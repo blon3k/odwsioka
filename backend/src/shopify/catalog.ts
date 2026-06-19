@@ -38,6 +38,15 @@ const titleToLocalId = new Map(
   Object.entries(PRODUCT_TITLES).map(([id, title]) => [title.toLowerCase(), id]),
 )
 
+function variantIdToLocalIdMap(): Map<string, string> {
+  const map = new Map<string, string>()
+  for (const [localId, gid] of Object.entries(config.productVariantMap)) {
+    const numericId = gid.replace('gid://shopify/ProductVariant/', '')
+    map.set(numericId, localId)
+  }
+  return map
+}
+
 async function loadCatalog(): Promise<CatalogCache> {
   if (catalogCache) return catalogCache
 
@@ -48,31 +57,41 @@ async function loadCatalog(): Promise<CatalogCache> {
 
   const data = (await response.json()) as { products: ShopifyProductJson[] }
   const variantIdByTitle = new Map<string, string>()
+  const variantIdToLocalId = variantIdToLocalIdMap()
   const products: CatalogProduct[] = []
 
   for (const product of data.products) {
     const variant = product.variants[0]
     if (!variant) continue
 
+    const variantId = String(variant.id)
     const titleKey = product.title.toLowerCase()
-    variantIdByTitle.set(titleKey, String(variant.id))
+    variantIdByTitle.set(titleKey, variantId)
 
-    const localId = titleToLocalId.get(titleKey)
+    const localId =
+      variantIdToLocalId.get(variantId) ?? titleToLocalId.get(titleKey)
     if (!localId) continue
+
+    const displayTitle = PRODUCT_TITLES[localId] ?? product.title
+    variantIdByTitle.set(displayTitle.toLowerCase(), variantId)
 
     const compareAtPrice = variant.compare_at_price ? Number(variant.compare_at_price) : undefined
 
     products.push({
       id: localId,
-      name: product.title,
+      name: displayTitle,
       price: Number(variant.price),
       compareAtPrice: compareAtPrice && compareAtPrice > Number(variant.price) ? compareAtPrice : undefined,
-      variantId: String(variant.id),
+      variantId,
     })
   }
 
-  catalogCache = { variantIdByTitle, products }
-  return catalogCache
+  const expectedCount = Object.keys(config.productVariantMap).length
+  if (products.length > 0 || expectedCount === 0) {
+    catalogCache = { variantIdByTitle, products }
+  }
+
+  return { variantIdByTitle, products }
 }
 
 function variantIdFromMap(productId: string): string | null {

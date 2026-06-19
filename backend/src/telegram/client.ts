@@ -49,6 +49,22 @@ export async function sendTelegramFormattedMessage(
   }
 }
 
+export async function deleteTelegramWebhook(): Promise<void> {
+  const response = await telegramRequest('deleteWebhook', { drop_pending_updates: false })
+
+  if (!response.ok) {
+    const body = await response.text()
+    throw new Error(`Telegram deleteWebhook failed (${response.status}): ${body}`)
+  }
+}
+
+export class TelegramPollingConflictError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'TelegramPollingConflictError'
+  }
+}
+
 type TelegramUpdate = {
   update_id: number
   message?: {
@@ -63,13 +79,24 @@ export async function getTelegramUpdates(offset: number): Promise<TelegramUpdate
   url.searchParams.set('timeout', '30')
 
   const response = await fetch(url)
+  const body = await response.text()
+
   if (!response.ok) {
-    const body = await response.text()
+    if (response.status === 409) {
+      throw new TelegramPollingConflictError(
+        'Another bot instance is polling getUpdates. Stop other dev servers or production instances using this bot token.',
+      )
+    }
     throw new Error(`Telegram getUpdates failed (${response.status}): ${body}`)
   }
 
-  const data = (await response.json()) as { ok: boolean; result: TelegramUpdate[] }
+  const data = JSON.parse(body) as { ok: boolean; error_code?: number; result: TelegramUpdate[] }
   if (!data.ok) {
+    if (data.error_code === 409) {
+      throw new TelegramPollingConflictError(
+        'Another bot instance is polling getUpdates. Stop other dev servers or production instances using this bot token.',
+      )
+    }
     throw new Error('Telegram getUpdates returned ok=false')
   }
 

@@ -4,9 +4,20 @@ import {
   formatStartMessage,
   formatStopMessage,
 } from './messages.js'
-import { getTelegramUpdates, isTelegramConfigured, sendTelegramMessage } from './client.js'
+import {
+  deleteTelegramWebhook,
+  getTelegramUpdates,
+  isTelegramConfigured,
+  sendTelegramMessage,
+  TelegramPollingConflictError,
+} from './client.js'
 
 let polling = false
+let conflictLogged = false
+
+export function stopTelegramPolling() {
+  polling = false
+}
 
 async function handleMessage(chatId: number, text: string) {
   const command = text.trim().split(/\s+/)[0]?.toLowerCase()
@@ -53,12 +64,35 @@ export function startTelegramPolling() {
   let offset = 0
 
   const loop = async () => {
+    try {
+      await deleteTelegramWebhook()
+    } catch (error) {
+      console.warn('Telegram deleteWebhook failed:', error)
+    }
+
     while (polling) {
       try {
         offset = await pollOnce(offset)
+        conflictLogged = false
       } catch (error) {
-        console.error('Telegram polling error:', error)
-        await new Promise((resolve) => setTimeout(resolve, 5000))
+        const isConflict = error instanceof TelegramPollingConflictError
+        if (isConflict && !conflictLogged) {
+          console.error('Telegram polling conflict:', error.message)
+          conflictLogged = true
+        } else if (!isConflict) {
+          console.error('Telegram polling error:', error)
+        }
+
+        const delayMs = isConflict ? 15_000 : 5_000
+        await new Promise((resolve) => setTimeout(resolve, delayMs))
+
+        if (isConflict) {
+          try {
+            await deleteTelegramWebhook()
+          } catch {
+            // Retry on next loop iteration.
+          }
+        }
       }
     }
   }

@@ -8,7 +8,7 @@ import { checkoutRouter } from './routes/checkout.js'
 import { productsRouter } from './routes/products.js'
 import { webhooksRouter } from './routes/webhooks.js'
 import { isTelegramConfigured } from './telegram/client.js'
-import { startTelegramPolling } from './telegram/polling.js'
+import { startTelegramPolling, stopTelegramPolling } from './telegram/polling.js'
 
 const app = express()
 
@@ -74,3 +74,11 @@ app.listen(config.PORT, () => {
     console.log('Telegram bot polling started')
   }
 })
+
+function shutdown() {
+  stopTelegramPolling()
+  process.exit(0)
+}
+
+process.on('SIGINT', shutdown)
+process.on('SIGTERM', shutdown)
