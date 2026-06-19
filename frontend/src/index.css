@@ -1,0 +1,164 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Open Runde';
+  src: url('./assets/open-runde-font-family/OpenRunde-Regular-BF64ee9c6978988.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Runde';
+  src: url('./assets/open-runde-font-family/OpenRunde-Medium-BF64ee9c695513a.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Runde';
+  src: url('./assets/open-runde-font-family/OpenRunde-Semibold-BF64ee9c69788f3.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Runde';
+  src: url('./assets/open-runde-font-family/OpenRunde-Bold-BF64ee9c696534f.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sundry Condensed';
+  src: url('./assets/sundry-condensed-w05-bold-1781685769-0/SundryCondensed-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lemon Days';
+  src: url('./assets/Lemon Days.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'Open Runde', sans-serif;
+  --font-heading: 'Sundry Condensed', sans-serif;
+  --font-logo: 'Lemon Days', sans-serif;
+  --font-body: 'Open Runde', sans-serif;
+  --color-cream: #fdf9f3;
+  --color-warm-cream: #f6f4ef;
+  --color-brand-orange: #ff5c00;
+  --color-brand-yellow: #ffc800;
+}
+
+html,
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+}
+
+@layer base {
+  a,
+  button:not(:disabled),
+  [role='button'] {
+    cursor: pointer;
+  }
+}
+
+@keyframes reviews-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-reviews-marquee {
+  animation: reviews-marquee 90s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-reviews-marquee {
+    animation: none;
+  }
+}
+
+@keyframes jitter {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-2px, 1px);
+  }
+  40% {
+    transform: translate(2px, -1px);
+  }
+  60% {
+    transform: translate(-1px, -2px);
+  }
+  80% {
+    transform: translate(1px, 2px);
+  }
+}
+
+@keyframes strikethrough {
+  0% {
+    transform: scaleX(0);
+  }
+  30% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes zzz-float {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-6px);
+  }
+}
+
+.animate-jitter {
+  animation: jitter 0.35s ease-in-out infinite;
+}
+
+.animate-strikethrough {
+  animation: strikethrough 2.5s ease-out infinite;
+}
+
+.animate-zzz {
+  animation: zzz-float 2s ease-in-out infinite;
+}
+
+.about-portrait-outline {
+  filter:
+    drop-shadow(1px 0 0 #fff)
+    drop-shadow(-1px 0 0 #fff)
+    drop-shadow(0 1px 0 #fff)
+    drop-shadow(0 -1px 0 #fff)
+    drop-shadow(1px 1px 0 #fff)
+    drop-shadow(-1px -1px 0 #fff)
+    drop-shadow(1px -1px 0 #fff)
+    drop-shadow(-1px 1px 0 #fff)
+    drop-shadow(2px 0 0 #fff)
+    drop-shadow(-2px 0 0 #fff)
+    drop-shadow(0 2px 0 #fff)
+    drop-shadow(0 -2px 0 #fff);
+}

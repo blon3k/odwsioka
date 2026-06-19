@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+backend/data/
+*.local
+
+# Large media (exceeds GitHub file size limit — host separately or use Git LFS)
+frontend/src/assets/bgvideo.mp4
