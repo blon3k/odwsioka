@@ -1,5 +1,6 @@
-import bgVideo from '../assets/bgvideo.mp4'
 import bundleImage from '../assets/bundle.png'
+
+const bgVideo = '/bgvideo.mp4'
 import BrutalistButton from './BrutalistButton'
 import FeatureBar from './FeatureBar'
 

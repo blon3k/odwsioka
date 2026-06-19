@@ -8,5 +8,6 @@ dist/
 backend/data/
 *.local
 
-# Large media (exceeds GitHub file size limit — host separately or use Git LFS)
+# Source 4K video — compressed copy lives in frontend/public/bgvideo.mp4
 frontend/src/assets/bgvideo.mp4
+frontend/src/assets/*4K*.mp4
