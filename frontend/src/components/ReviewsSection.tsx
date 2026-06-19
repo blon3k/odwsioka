@@ -199,7 +199,7 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
 
 export default function ReviewsSection() {
   return (
-    <section className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-x-hidden bg-white py-20 sm:py-28">
+    <section className="w-full overflow-x-clip bg-white py-20 sm:py-28">
       <div className="overflow-hidden py-10">
         <div className="animate-reviews-marquee flex w-max items-center gap-4">
           {loopedReviews.map((review, index) => (

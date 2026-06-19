@@ -30,7 +30,7 @@ export default function HomePage() {
 
   return (
     <div
-      className="flex flex-col gap-2 bg-white p-2 transition-[padding-bottom] duration-300 motion-reduce:transition-none"
+      className="flex min-w-0 flex-col gap-2 overflow-x-clip bg-white p-2 transition-[padding-bottom] duration-300 motion-reduce:transition-none"
       style={{ paddingBottom: stickyBarPadding }}
     >
       <Navbar />

@@ -17,25 +17,6 @@ function MenuIcon() {
   )
 }
 
-function UserIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden="true">
-      <path
-        d="M4 20V19C4 16.7909 5.79086 15 8 15H16C18.2091 15 20 16.7909 20 19V20"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12C9.51472 12 7.5 9.98528 7.5 7.5C7.5 5.01472 9.51472 3 12 3C14.4853 3 16.5 5.01472 16.5 7.5Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
-
 function CartIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden="true">
@@ -108,9 +89,6 @@ export default function Navbar() {
             onClick={() => setMenuOpen((open) => !open)}
           >
             <MenuIcon />
-          </button>
-          <button type="button" className="text-black transition hover:opacity-70" aria-label="Konto">
-            <UserIcon />
           </button>
           <button
             type="button"

@@ -21,8 +21,8 @@ function StarRating() {
 
 export default function Hero() {
   return (
-    <section id="hero" className="overflow-visible">
-      <div className="relative grid min-h-[min(92vh,900px)] gap-[8px] overflow-visible lg:grid-cols-[4fr_6fr]">
+    <section id="hero" className="w-full min-w-0 overflow-x-clip">
+      <div className="relative grid min-h-[min(92vh,900px)] w-full min-w-0 gap-[8px] lg:grid-cols-[4fr_6fr]">
         <img
           src={bundleImage}
           alt=""
@@ -30,26 +30,28 @@ export default function Hero() {
           className="pointer-events-none absolute top-1/2 left-[calc(40%-4px)] z-20 hidden w-[min(560px,50vw)] -translate-x-1/2 -translate-y-1/2 object-contain lg:block"
         />
 
-        <div className="relative z-10 min-h-[420px] overflow-visible rounded-[8px] bg-neutral-200 lg:min-h-full lg:overflow-hidden">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="h-full w-full rounded-[8px] object-cover object-center"
-            aria-label="Background video"
-          >
-            <source src={bgVideo} type="video/mp4" />
-          </video>
+        <div className="relative z-10 min-h-[420px] w-full min-w-0 rounded-[8px] bg-neutral-200 lg:min-h-full">
+          <div className="absolute inset-0 overflow-hidden rounded-[8px]">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="h-full w-full max-w-full object-cover object-center"
+              aria-label="Background video"
+            >
+              <source src={bgVideo} type="video/mp4" />
+            </video>
+          </div>
           <img
             src={bundleImage}
             alt="Pakiet produktów: mleko, ser i miód"
-            className="pointer-events-none absolute bottom-8 left-1/2 z-10 w-[min(360px,78vw)] -translate-x-1/2 translate-y-1/2 object-contain sm:bottom-10 sm:w-[min(460px,64vw)] lg:hidden"
+            className="pointer-events-none absolute bottom-8 left-1/2 z-10 w-[min(360px,78vw)] max-w-full -translate-x-1/2 translate-y-1/2 object-contain sm:bottom-10 sm:w-[min(460px,64vw)] lg:hidden"
           />
         </div>
 
-        <div className="flex flex-col items-center justify-center overflow-visible rounded-[8px] bg-warm-cream px-8 pb-20 pt-28 text-center sm:pt-32 lg:overflow-hidden lg:px-16 lg:py-20">
-          <h1 className="font-heading text-8xl font-bold uppercase leading-[0.9] tracking-[-4px] text-black sm:text-9xl lg:text-[11rem]">
+        <div className="flex min-w-0 flex-col items-center justify-center rounded-[8px] bg-warm-cream px-8 pb-20 pt-28 text-center sm:pt-32 lg:overflow-hidden lg:px-16 lg:py-20">
+          <h1 className="max-w-full font-heading text-8xl font-bold uppercase leading-[0.9] tracking-[-4px] text-black sm:text-9xl lg:text-[11rem]">
             Prawdziwe
             <br />
             Mleko
